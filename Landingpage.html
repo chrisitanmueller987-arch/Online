@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>BYZEP – Smart Device Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BYZEP entwickelt seriennahe Smart-Device-Prototypen, Elektronik, PCB-Design und Gehäuse – für komplexe Hardware-Produkte, Pilotprojekte und Investorendecks.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="BYZEP – Smart-Device-Prototypen, PCB-Design &amp; Gehäuse">
+  <meta property="og:description" content="Funktionsfähige Smart-Device-Prototypen statt PowerPoint – Elektronik, PCB &amp; futuristische Gehäuse aus einer Hand.">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      --bg: #f4eee2;
+      --bg-alt: #fdf7ec;
+      --accent: #e63946;
+      --accent-soft: rgba(230,57,70,0.12);
+      --accent-blue: #1d3557;
+      --accent-yellow: #ffcc33;
+      --accent-green: #16a34a;
+      --accent-light-blue: #60a5fa;
+      --text: #17151a;
+      --muted: #615d66;
+      --border: rgba(0,0,0,0.12);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow-soft: 0 22px 60px rgba(10,10,20,0.18);
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Segoe UI", sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(circle at 10% -10%, rgba(255,204,51,0.8) 0, transparent 45%),
+        radial-gradient(circle at 90% 0, rgba(230,57,70,0.75) 0, transparent 40%),
+        radial-gradient(circle at 0 80%, rgba(26,67,118,0.75) 0, transparent 40%),
+        radial-gradient(circle at 100% 90%, rgba(72,201,176,0.65) 0, transparent 40%),
+        var(--bg);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 16px 72px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page::before,
+    .page::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      max-width: 1200px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .page::before {
+      background:
+        radial-gradient(circle at 15% 30%, rgba(255,255,255,0.9) 0, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(250,250,250,0.95) 0, transparent 55%);
+      mix-blend-mode: lighten;
+      opacity: 0.7;
+    }
+
+    .page::after {
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(255,204,51,0.6) 0, transparent 45%),
+        conic-gradient(from 145deg at 80% 10%,
+          rgba(255,255,255,0.0) 0deg,
+          rgba(255,255,255,0.12) 40deg,
+          rgba(255,255,255,0.0) 80deg,
+          rgba(230,57,70,0.18) 110deg,
+          rgba(29,53,87,0.16) 160deg,
+          rgba(255,255,255,0.0) 220deg);
+      mix-blend-mode: multiply;
+      opacity: 0.65;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -40px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #111827;
+      color: #f9fafb;
+      font-size: 0.8rem;
+      z-index: 50;
+      transition: top 0.15s ease-out;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 16px;
+      z-index: 40;
+      border-radius: 999px;
+      background: rgba(253,247,236,0.92);
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.18),
+        0 0 0 1px rgba(255,255,255,0.35);
+      backdrop-filter: blur(18px);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    header::before,
+    header::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      opacity: 0.5;
+      mix-blend-mode: multiply;
+    }
+
+    header::before {
+      width: 80px;
+      height: 80px;
+      left: -20px;
+      top: -30px;
+      background:
+        radial-gradient(circle, rgba(230,57,70,0.8) 0, transparent 65%);
+    }
+
+    header::after {
+      width: 120px;
+      height: 120px;
+      right: -30px;
+      bottom: -50px;
+      background:
+        radial-gradient(circle, rgba(29,53,87,0.85) 0, transparent 70%);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background:
+        conic-gradient(from 210deg,
+          #1d3557 0deg,
+          #e63946 110deg,
+          #ffcc33 220deg,
+          #1d3557 360deg);
+      position: relative;
+      box-shadow:
+        0 10px 24px rgba(0,0,0,0.45),
+        0 0 0 2px rgba(255,255,255,0.75);
+      overflow: hidden;
+    }
+
+    .logo-icon .trace {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 52%;
+      height: 2px;
+      background: rgba(253,246,178,0.95);
+      border-radius: 999px;
+      box-shadow:
+        0 -8px 0 0 rgba(255,255,255,0.18),
+        0 8px 0 0 rgba(0,0,0,0.25);
+    }
+
+    .logo-icon .via {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #fdf7ec;
+      box-shadow:
+        0 0 0 2px rgba(0,0,0,0.45),
+        0 0 0 4px rgba(255,255,255,0.35);
+    }
+
+    .logo-icon .via-1 { top: 5px; left: 6px; }
+    .logo-icon .via-2 { top: 18px; right: 6px; }
+    .logo-icon .via-3 { bottom: 4px; left: 14px; }
+
+    .logo-text-main {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+    }
+
+    .logo-text-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 3px;
+    }
+
+    nav a::after,
+    nav a::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px;
+      transition: transform 0.18s ease-out, opacity 0.18s ease-out;
+      transform-origin: left;
+      transform: scaleX(0);
+      opacity: 0;
+    }
+
+    nav a::after {
+      width: 100%;
+      background: linear-gradient(90deg,#e63946,#ffcc33);
+    }
+
+    nav a::before {
+      width: 32%;
+      background: #1d3557;
+      bottom: 4px;
+    }
+
+    nav a:hover::after,
+    nav a:hover::before {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .nav-cta {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #111111;
+      background:
+        linear-gradient(135deg,#ffcc33,#e63946);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(255,255,255,0.75);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition:
+        transform 0.14s cubic-bezier(0.2,0.7,0.25,1.4),
+        box-shadow 0.14s ease-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px) rotate(-1.2deg);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.85);
+    }
+
+    @media (max-width: 860px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 24px;
+      }
+      nav {
+        flex-wrap: wrap;
+        row-gap: 6px;
+      }
+      .nav-cta {
+        align-self: stretch;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* HERO */
+
+    .hero {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) minmax(0,1.05fr);
+      gap: 32px;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      opacity: 0.65;
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 220px;
+      height: 220px;
+      left: -60px;
+      top: -80px;
+      background:
+        radial-gradient(circle,#ffcc33 0,transparent 65%);
+      clip-path: polygon(0 5%, 100% 0, 85% 100%, 5% 90%);
+    }
+
+    .hero::after {
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      bottom: -120px;
+      background:
+        radial-gradient(circle,#1d3557 0,transparent 70%);
+      clip-path: polygon(10% 0, 100% 15%, 90% 95%, 0 80%);
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .hero::after {
+        right: -40px;
+        bottom: -60px;
+      }
+      .hero::before {
+        left: -30px;
+        top: -40px;
+      }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 3.9vw, 3.2rem);
+      line-height: 1.03;
+      margin-bottom: 14px;
+      letter-spacing: -0.04em;
+    }
+
+    .hero h1 span {
+      color: #e63946;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: none;
+    }
+
+    .hero-sub {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 16px;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.18);
+      font-size: 0.78rem;
+      color: #201f24;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,0.95),rgba(253,247,236,0.95));
+      backdrop-filter: blur(4px);
+      box-shadow:
+        3px 3px 0 rgba(17,17,17,0.25);
+      transform: skewX(-8deg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pill::before {
+      content: "";
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      right: -16px;
+      top: -18px;
+      border-radius: 999px;
+      border: 2px solid rgba(230,57,70,0.3);
+      opacity: 0.6;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #111111;
+      background:
+        linear-gradient(135deg,#ffcc33,#e63946);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(255,255,255,0.85);
+      transition:
+        transform 0.14s cubic-bezier(0.2,0.7,0.25,1.4),
+        box-shadow 0.14s ease-out;
+      position: relative;
+    }
+
+    .btn-primary span {
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.55);
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      background: rgba(253,247,236,0.9);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) rotate(-1.8deg);
+      box-shadow:
+        0 22px 55px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.9);
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 280px;
+      padding: 6px 10px;
+      border-radius: 16px;
+      background: rgba(253,247,236,0.9);
+      border: 1px dashed rgba(0,0,0,0.18);
+    }
+
+    .hero-media {
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at 15% 0,#ffcc33 0,transparent 55%),
+        radial-gradient(circle at 100% 90%,#1d3557 0,transparent 60%),
+        linear-gradient(135deg,#fdf7ec,#ffffff);
+      border: 1px solid rgba(0,0,0,0.14);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.32),
+        0 0 0 1px rgba(255,255,255,0.8);
+      padding: 14px;
+      display: grid;
+      grid-template-rows: minmax(170px,1.4fr) minmax(90px,1fr);
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-media::before {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      border: 10px solid rgba(255,255,255,0.5);
+      right: -40px;
+      top: -60px;
+      opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+
+    @media (max-width: 880px) {
+      .hero-media {
+        order: -1;
+      }
+    }
+
+    .hero-media-main {
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background: #020617;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.55);
+    }
+
+    .hero-media-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.03);
+    }
+
+    .hero-main-label {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(253,247,236,0.96);
+      font-size: 0.7rem;
+      color: #111827;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow:
+        0 8px 18px rgba(0,0,0,0.35);
+    }
+
+    .hero-main-label span {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.35);
+    }
+
+    .hero-media-row {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .hero-thumb {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: #020617;
+      box-shadow:
+        0 10px 22px rgba(0,0,0,0.45);
+    }
+
+    .hero-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+    }
+
+    .hero-thumb-label {
+      position: absolute;
+      left: 7px;
+      bottom: 7px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(6,8,20,0.85);
+      font-size: 0.7rem;
+      color: #e5e7eb;
+    }
+
+    main {
+      margin-top: 44px;
+      display: grid;
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SECTION SHARED */
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .section-header::before {
+      content: "";
+      position: absolute;
+      left: -26px;
+      top: -18px;
+      width: 70px;
+      height: 70px;
+      border-radius: 0 100% 0 100%;
+      border: 3px solid rgba(0,0,0,0.14);
+      border-left: 0;
+      border-bottom: 0;
+      opacity: 0.6;
+    }
+
+    .section-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--accent-blue);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      letter-spacing: -0.04em;
+    }
+
+    .section-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 440px;
+    }
+
+    /* LEISTUNGEN */
+
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 880px) {
+      .card-row {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .card-row {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .card {
+      background:
+        linear-gradient(135deg,#ffffff,#fdf7ec);
+      border-radius: 26px;
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow:
+        0 22px 55px rgba(0,0,0,0.22),
+        0 0 0 1px rgba(255,255,255,0.8);
+      display: grid;
+      grid-template-rows: 140px auto;
+      gap: 10px;
+      padding: 10px 12px 14px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card.card--active {
+      transform: scale(1.03);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.9);
+      z-index: 2;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      right: -40px;
+      top: -40px;
+      background:
+        radial-gradient(circle,rgba(230,57,70,0.4) 0,transparent 65%);
+      mix-blend-mode: multiply;
+    }
+
+    .card-img {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .card-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg,rgba(0,0,0,0.2),transparent 40%);
+      mix-blend-mode: soft-light;
+      opacity: 0.4;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+
+    .card p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .card-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .card-pill {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-blue);
+      border: 1px solid rgba(0,0,0,0.14);
+    }
+
+    /* Detail-Fenster für Leistungen */
+
+    .leistungen-detail-container {
+      margin-top: 24px;
+      display: none;
+    }
+
+    .leistungen-detail-container.is-visible {
+      display: block;
+    }
+
+    .leistungen-detail-section {
+      display: none;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 20px;
+      align-items: flex-start;
+      padding: 18px 18px 20px;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 0 0,#ffcc33 0,transparent 45%),
+        linear-gradient(135deg,#fdf7ec,#ffffff);
+      border: 1px solid rgba(0,0,0,0.16);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.85);
+      margin-bottom: 8px;
+    }
+
+    .leistungen-detail-section.is-active {
+      display: grid;
+    }
+
+    @media (max-width: 880px) {
+      .leistungen-detail-section {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .pcb-badges {
+      margin: 10px 0 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pcb-badge {
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.14);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.18);
+    }
+
+    .pcb-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .pcb-media {
+      border-radius: 22px;
+      overflow: hidden;
+      background: #020617;
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.4);
+    }
+
+    .pcb-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+    }
+
+    .pcb-list {
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .pcb-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+    }
+
+    .pcb-item span {
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    /* PROJEKTE */
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 880px) {
+      .projects {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .projects {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .project {
+      background:
+        linear-gradient(135deg,#ffffff,#fdf7ec);
+      border-radius: 26px;
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow:
+        0 22px 55px rgba(0,0,0,0.22),
+        0 0 0 1px rgba(255,255,255,0.8);
+      overflow: hidden;
+      font-size: 0.8rem;
+      display: grid;
+      grid-template-rows: 140px auto;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .project.project--active {
+      transform: scale(1.03);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.9);
+      z-index: 2;
+    }
+
+    .project-img {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .project-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg,rgba(0,0,0,0.4),transparent 40%);
+      mix-blend-mode: soft-light;
+    }
+
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.03);
+    }
+
+    .project-label {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      color: #f9fafb;
+      background: rgba(0,0,0,0.75);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+    }
+
+    .project-body {
+      padding: 10px 12px 12px;
+    }
+
+    .project-body h3 {
+      font-size: 0.96rem;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .project-body p {
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .project-body strong {
+      color: #26252a;
+    }
+
+    /* Detail-Fenster für Projekte */
+
+    .projects-detail-container {
+      margin-top: 24px;
+      display: none;
+    }
+
+    .projects-detail-container.is-visible {
+      display: block;
+    }
+
+    .projects-detail-section {
+      display: none;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 20px;
+      align-items: flex-start;
+      padding: 18px 18px 20px;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 0 0,#ffcc33 0,transparent 45%),
+        linear-gradient(135deg,#fdf7ec,#ffffff);
+      border: 1px solid rgba(0,0,0,0.16);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.85);
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+    }
+
+    .projects-detail-section.is-active {
+      display: grid;
+    }
+
+    @media (max-width: 880px) {
+      .projects-detail-section {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .projects-detail-section ul {
+      margin-top: 10px;
+      padding-left: 18px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .projects-detail-section li {
+      margin-bottom: 4px;
+    }
+
+    .projects-detail-media {
+      border-radius: 22px;
+      overflow: hidden;
+      background: #020617;
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.4);
+    }
+
+    .projects-detail-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+    }
+
+    /* GALLERY */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 880px) {
+      .gallery-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+
+    .gallery-item {
+      border-radius: 18px;
+      overflow: hidden;
+      background: #020617;
+      height: 96px;
+      position: relative;
+      box-shadow:
+        0 14px 30px rgba(0,0,0,0.45);
+    }
+
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 0,rgba(255,255,255,0.3) 0,transparent 40%);
+      mix-blend-mode: soft-light;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+    }
+
+    /* ABLAUF / TIMELINE */
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 14px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 880px) {
+      .timeline { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .timeline { grid-template-columns: minmax(0,1fr); }
+    }
+
+    .timeline-step {
+      background:
+        linear-gradient(135deg,#ffffff,#fdf7ec);
+      border-radius: 22px;
+      padding: 10px 11px;
+      border: 1px solid rgba(0,0,0,0.16);
+      box-shadow:
+        0 16px 40px rgba(0,0,0,0.22),
+        0 0 0 1px rgba(255,255,255,0.75);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-step::after {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      right: -22px;
+      bottom: -22px;
+      border-radius: 50%;
+      border: 3px solid rgba(29,53,87,0.4);
+      opacity: 0.7;
+    }
+
+    .timeline-step strong {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #333038;
+    }
+
+    .step-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
+      position: relative;
+      background: #fdf7ec;
+    }
+
+    .step-dot::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle,#e63946 0,#ffcc33 75%);
+    }
+
+    .timeline-step p {
+      margin-top: 7px;
+      color: var(--muted);
+    }
+
+    /* KONTAKT */
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 880px) {
+      .contact {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .contact-form {
+      border-radius: 26px;
+      border: 1px solid rgba(0,0,0,0.14);
+      background:
+        linear-gradient(135deg,#ffffff,#fdf7ec);
+      padding: 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 0.8rem;
+      box-shadow:
+        0 22px 55px rgba(0,0,0,0.22),
+        0 0 0 1px rgba(255,255,255,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-form::before {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      left: -45px;
+      bottom: -45px;
+      border-radius: 50%;
+      border: 4px solid rgba(230,57,70,0.4);
+      opacity: 0.7;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    input, textarea {
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.18);
+      padding: 8px 11px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      background: #ffffff;
+      color: #111827;
+      outline: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    textarea {
+      border-radius: 18px;
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 0 1px rgba(230,57,70,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    .contact-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .contact-aside {
+      border-radius: 26px;
+      border: 1px solid rgba(0,0,0,0.18);
+      background:
+        linear-gradient(135deg,rgba(253,247,236,0.96),rgba(255,255,255,0.98)),
+        url("https://images.pexels.com/photos/9242852/pexels-photo-9242852.jpeg?cs=srgb&dl=pexels-mikhail-nilov-9242852.jpg&fm=jpg")
+          center/cover no-repeat;
+      padding: 13px 14px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 7px;
+      font-size: 0.8rem;
+      color: #111827;
+      background-blend-mode: soft-light;
+      box-shadow:
+        0 22px 55px rgba(0,0,0,0.32),
+        0 0 0 1px rgba(255,255,255,0.9);
+    }
+
+    .contact-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    }
+
+
+    .about {
+      border-radius: 32px;
+      padding: 20px 20px 22px;
+      background:
+        radial-gradient(circle at 0 0,#ffcc33 0,transparent 45%),
+        linear-gradient(135deg,#fdf7ec,#ffffff);
+      border: 1px solid rgba(0,0,0,0.16);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,255,255,0.85);
+      display: grid;
+      grid-template-columns: minmax(0,1.3fr) minmax(0,1fr);
+      gap: 22px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -50px;
+      top: -60px;
+      border-radius: 50%;
+      border: 5px solid rgba(29,53,87,0.4);
+      opacity: 0.7;
+    }
+
+    @media (max-width: 880px) {
+      .about {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .about-aside {
+      border-radius: 24px;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: rgba(253,247,236,0.98);
+      padding: 12px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 0.8rem;
+      color: #111827;
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.25),
+        0 0 0 1px rgba(255,255,255,0.85);
+    }
+
+    .about-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    footer {
+      margin-top: 46px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,0,0,0.18);
+      font-size: 0.76rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Lockereres Layout */
+
+    .page {
+      padding: 32px 16px 104px;
+    }
+
+    main {
+      margin-top: 56px;
+      gap: 72px;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        gap: 52px;
+      }
+    }
+
+    .section-header {
+      margin-bottom: 26px;
+    }
+
+    .section-sub,
+    .hero-sub,
+    .card p,
+    .project-body p,
+    .timeline-step p,
+    .contact-note,
+    .about p,
+    .about-aside div,
+    .contact-aside div {
+      line-height: 1.6;
+    }
+
+    main > section:not(.hero):not(.about) {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    #leistungen .card-row,
+    #warum .timeline,
+    #projekte .projects,
+    #ablauf .timeline,
+    #kontakt .contact {
+      margin-top: 8px;
+    }
+
+    .card-row,
+    .projects,
+    .gallery-grid,
+    .timeline,
+    .contact {
+      gap: 22px;
+    }
+
+    .card,
+    .project,
+    .timeline-step,
+    .contact-form,
+    .contact-aside,
+    .about,
+    .gallery-item,
+    .hero-media {
+      box-shadow:
+        0 16px 40px rgba(0,0,0,0.18),
+        0 0 0 1px rgba(255,255,255,0.85);
+    }
+
+    .pill,
+    .card-pill,
+    .about-chip,
+    .contact-chip {
+      box-shadow: 2px 2px 0 rgba(17,17,17,0.18);
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Direkt zum Inhalt springen</a>
+
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-icon" aria-hidden="true">
+          <span class="trace"></span>
+          <span class="via via-1"></span>
+          <span class="via via-2"></span>
+          <span class="via via-3"></span>
+        </div>
+        <div>
+          <div class="logo-text-main">BYZEP</div>
+          <div class="logo-text-sub"></div>
+        </div>
+      </div>
+      <nav aria-label="Hauptnavigation">
+        <a href="#start">Start</a>
+        <a href="#leistungen">Leistungen</a>
+        <a href="#warum">Warum BYZEP</a>
+        <a href="#projekte">Projekte</a>
+        <a href="#about">Über uns</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <a href="#kontakt" class="nav-cta">
+        Prototyp besprechen
+        <span aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <main id="main">
+      <!-- HERO -->
+      <section id="start" class="hero" aria-labelledby="hero-heading">
+        <div>
+          <div class="hero-eyebrow">Studio für Smart Devices &amp; Hardware-Prototypen</div>
+          <h1 id="hero-heading">
+            Von der <span>Idee</span><br>
+            zum seriennahen <span>Smart-Device-Prototyp</span> – alles aus einer Hand.
+          </h1>
+          <p class="hero-sub">
+            BYZEP entwickelt seriennahe Smart-Device-Prototypen von der Systemarchitektur über Elektronik und PCB-Design bis hin zu präzisem 3D-Druck und Finishing. So kannst du im echten Umfeld testen, Risiken vor dem Rollout reduzieren und deine Serienpartner später nahtlos andocken lassen.
+          </p>
+          <div class="hero-pills" aria-label="Schwerpunkte &amp; Ziele">
+            <span class="pill">Risiken vor Serienstart reduzieren</span>
+            <span class="pill">Konzept im realen Umfeld testen</span>
+            <span class="pill">Management & Stakeholder überzeugen</span>
+          </div>
+          <div class="hero-cta-row">
+            <a href="#kontakt" class="btn-primary">
+              Prototyp besprechen
+              <span aria-hidden="true">→</span>
+            </a>
+            <div class="hero-note">
+              Schreib kurz, welches Gerät oder welchen Use Case du realisieren willst. Wir melden uns und planen mit dir den Weg zu einem handfesten Prototyp.
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-media" aria-label="Beispiele für Prototypen">
+          <div class="hero-media-main">
+            <img loading="lazy"
+                 fetchpriority="high"
+                 decoding="async"
+                 src="https://images.pexels.com/photos/19588204/pexels-photo-19588204.jpeg?cs=srgb&dl=pexels-jakubzerdzicki-19588204.jpg&fm=jpg"
+                 alt="3D-Druck- und Hardware-Prototyping-Setup auf einem Tisch">
+            <div class="hero-main-label">
+              <span></span> Seriennaher Prototyp im Test
+            </div>
+          </div>
+          <div class="hero-media-row">
+            <div class="hero-thumb">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/6755091/pexels-photo-6755091.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6755091.jpg&fm=jpg"
+                   alt="Feines Layout auf einer Leiterplatte">
+              <div class="hero-thumb-label">PCB-Detail</div>
+            </div>
+            <div class="hero-thumb">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/15686999/pexels-photo-15686999.jpeg?cs=srgb&dl=pexels-fox-58267-15686999.jpg&fm=jpg"
+                   alt="3D-Drucker fertigt ein technisches Bauteil">
+              <div class="hero-thumb-label">Gehäuse-Prototyp</div>
+            </div>
+            <div class="hero-thumb">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/12741836/pexels-photo-12741836.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-12741836.jpg&fm=jpg"
+                   alt="Löten an einem Hardware-Prototyp">
+              <div class="hero-thumb-label">Labortisch</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- LEISTUNGEN -->
+      <section id="leistungen" aria-labelledby="leistungen-heading">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Leistungen</div>
+            <h2 id="leistungen-heading">Was du von uns bekommst</h2>
+          </div>
+          <p class="section-sub">
+            <em>Unser Ziel ist ein Prototyp, der sich bereits wie ein fertiges Produkt anfühlt.</em>
+          </p>
+        </div>
+
+        <div class="card-row">
+          <article class="card" data-detail-id="detail-proto">
+            <div class="card-img">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/1178498/pexels-photo-1178498.jpeg?cs=srgb&dl=pexels-senne-167648-1178498.jpg&fm=jpg"
+                   alt="Elektronik-Prototyp auf einem Schreibtisch">
+            </div>
+            <div>
+              <h3>Proof of Concept &amp; Prototyping</h3>
+              <p>Vom Machbarkeitsnachweis bis zum seriennahen Muster, mit dem du im echten Umfeld 						testen und entscheiden kannst.</p>
+              <div class="card-pills">
+                <span class="card-pill">PoC-Aufbauten</span>
+                <span class="card-pill">Seriennahe Prototypen</span>
+                <span class="card-pill">Funktionstests</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" data-detail-id="detail-pcb">
+            <div class="card-img">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/6755091/pexels-photo-6755091.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6755091.jpg&fm=jpg"
+                   alt="Makro eines PCB-Layouts">
+            </div>
+            <div>
+              <h3>Elektronik &amp; PCB-Design</h3>
+              <p>
+                Entwicklung und Layout von Elektronikbaugruppen und Leiterplatten und das vom Schaltplan bis zum fertigungsgerechten Multilayer-PCB, auf Wunsch inklusive Firmware.
+              </p>
+              <div class="card-pills">
+                <span class="card-pill">Schaltplan- & Layoutentwicklung</span>
+                <span class="card-pill">High-Speed-, BGA- & HDI-Design</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" data-detail-id="detail-housing">
+            <div class="card-img">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/15686999/pexels-photo-15686999.jpeg?cs=srgb&dl=pexels-fox-58267-15686999.jpg&fm=jpg"
+                   alt="3D-Drucker fertigt ein Gehäuse">
+            </div>
+            <div>
+              <h3>Gehäuse &amp; 3D-Druck</h3>
+              <p>
+                Seriennahe Gehäuse: ergonomisch, funktional und auf deine Elektronik
+                abgestimmt – inklusive 3D-Druck, Beschichtung und Lackierung.
+              </p>
+              <div class="card-pills">
+                <span class="card-pill">Industrial Design &amp; 3D-CAD</span>
+                <span class="card-pill">Seriennahe Prototypen</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Detail-Fenster für die drei Leistungen -->
+        <div class="leistungen-detail-container" id="leistungen-details" aria-live="polite">
+          <!-- Prototyping-Detail -->
+          <section id="detail-proto" class="leistungen-detail-section" aria-labelledby="proto-heading">
+            <div>
+              <div class="section-kicker">VON DER IDEE ZUM FUNKTIONIERENDEN PROTOTYP</div>
+              <h2 id="proto-heading">Proof of Concept & Prototyping, ermöglicht schnelle Entscheidungen.</h2>
+              <div class="pcb-badges">
+                <span class="pcb-badge">Systemarchitektur</span>
+                <span class="pcb-badge">Funktionsmuster im Umfeld</span>
+                <span class="pcb-badge">Verständlich für alle Stakeholder</span>
+                <span class="pcb-badge">Risiken früh erkennen und adressieren</span>
+              </div>
+              <p class="pcb-text">
+                Ein Prototyp ist für uns mehr als ein Versuchsaufbau: Er muss zeigen, ob dein Ansatz im echten Einsatz funktioniert. Deshalb entwickeln wir die Architektur, wählen passende Komponenten und bauen Funktionsmuster so, dass du darauf weiter aufbauen kannst.
+              </p>
+              <div class="pcb-list">
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Übersetzen deiner Use Cases in klare Hardware- und Schnittstellenkonzepte.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Prototypen, mit denen du Workflow, Ergonomie und Technik real testen kannst.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Dokumentation, Diagramme und kurze Berichte, die du intern teilen kannst.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Option, den Prototyp in seriennahe Pilotprojekte und erste Kleinserien zu überführen.</div>
+                </div>
+              </div>
+            </div>
+            <div class="pcb-media" aria-label="Prototyping-Beispiel">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/1178498/pexels-photo-1178498.jpeg?cs=srgb&dl=pexels-senne-167648-1178498.jpg&fm=jpg"
+                   alt="Aufgebauter Hardware-Prototyp auf einem Tisch">
+            </div>
+          </section>
+
+          <!-- PCB-Detail -->
+          <section id="detail-pcb" class="leistungen-detail-section pcb-section" aria-labelledby="pcb-heading">
+            <div>
+              <div class="section-kicker">PCB als Kernkompetenz</div>
+              <h2 id="pcb-heading">Platinendesign mit Fokus auf Signal-Integrity, Power-Integrity und Fertigungstauglichkeit</h2>
+              <div class="pcb-badges">
+                <span class="pcb-badge">Signal-Integrity</span>
+                <span class="pcb-badge">Power-Integrity</span>
+                <span class="pcb-badge">Design for Manufacturing</span>
+                <span class="pcb-badge">Wartbar &amp; dokumentiert</span>
+              </div>
+              <div class="pcb-list">
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Signal-Integrity &amp; Power-Integrity von Beginn an mitgedacht.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>DfM-optimierte Layouts für reproduzierbare Fertigung.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Multilayer- und HDI-Designs mit definiertem Stackup.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>High-Speed-Layout mit kontrollierter Impedanz und signalintegritätsgerechtem Längenabgleich. </div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Wartbare, versionierbare und sauber dokumentierte Designs.</div>
+                </div>
+              </div>
+              <p class="pcb-text">
+                Ein PCB ist nie nur eine Leiterplatte, sondern Teil der Systemarchitektur Deines Produkts. Deshalb legen wir Wert auf saubere Netztopologien, konsistente Bauteilbibliotheken, klare Kennzeichnungen und ein Layout, das auch in einigen Jahren noch jede Ingenieurin und jeder Ingenieur sicher lesen, debuggen und erweitern kann.
+              </p>
+              <p class="pcb-text"><strong>Was wir tun:</strong></p>
+              <div class="pcb-list">
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>
+                    <strong>Neuentwicklung &amp; Design-Review</strong><br>
+                    Digital, analog, Mixed-Signal<br>
+                    High-Speed-Design für DDR-Interfaces, USB High-Speed, Gigabit-Ethernet, LVDS-Schnittstellen und MIPI CSI/DSI.<br>
+                    EMV-gerechtes Design, Rückstrompfade und Massekonzept<br>
+                    Signal-Integrity-Checks, Terminierungskonzepte, Lagenaufteilung
+                  </div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>
+                    <strong>Multilayer- &amp; HDI-Layouts mit definiertem Stackup</strong><br>
+                    Stackup-Definition mit kontrollierter Impedanz<br>
+                    Geführte Differenzpaare, Längenabgleich und Skew-Management<br>
+                    Via-Konzepte (Blind/Buried Vias, Via-in-Pad) abgestimmt auf den Leiterplattenfertiger
+							Durch optimierte Stackups und Routing reduzieren wir, wo möglich, die HDI-Komplexität, zum Beispiel von 10 auf 6 Lagen, und senken so je nach Fertiger und Volumen die Leiterplattenkosten deutlich.<br>
+                  </div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>
+                    <strong>Design for Manufacturing (DfM) &amp; Design for Test (DfT)</strong><br>
+                    Anwendung gängiger DfM-Regeln, IPC-Richtlinien und Hersteller-Constraints<br>
+                    Panelisierung, Fertigungstoleranzen, robuste Footprints<br>
+                    Messpunkte, Boundary-Scan-Header, Trennlinks und Testpads für ICT/Funktionstest
+                  </div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>
+                    <strong>Inbetriebnahme- und Servicefreundlichkeit</strong><br>
+                    Klar strukturierte Schaltpläne und Netzbenennung<br>
+                    Lesbare Silkscreens für Fertigung, Service und Fehlersuche<br>
+                    Durchdachte Debug-Schnittstellen (SWD/JTAG/UART etc.)
+                  </div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>
+                    <strong>Vollständige, lieferantenfähige Unterlagen</strong><br>
+                    Layout-Files, Gerber, Bohrdaten, Fertigungszeichnungen<br>
+                    Stücklisten (BOM) mit Alternativ- und Zweitquellen<br>
+                    Pick&amp;Place-Daten – direkt verwendbar für Ihre EMS-Partner
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pcb-media" aria-label="Beispiel einer Leiterplatte">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/343457/pexels-photo-343457.jpeg?cs=srgb&dl=pexels-pixabay-343457.jpg&fm=jpg"
+                   alt="Nahaufnahme einer komplexen Leiterplatte">
+            </div>
+          </section>
+
+          <!-- Gehäuse-Detail mit deinem Text -->
+          <section id="detail-housing" class="leistungen-detail-section" aria-labelledby="housing-heading">
+            <div>
+              <div class="section-kicker">Gehäuse &amp; Haptik</div>
+              <h2 id="housing-heading">Seriennahe Gehäuse für funktionsfähige Muster und Vorserien.</h2>
+              <div class="pcb-badges">
+                <span class="pcb-badge">Industrial Design</span>
+                <span class="pcb-badge">3D-CAD &amp; 3D-Druck</span>
+                <span class="pcb-badge">Ergonomie &amp; Montage</span>
+                <span class="pcb-badge">Optisch seriennah</span>
+              </div>
+              <p class="pcb-text">
+                Ein Gerät wirkt erst dann serienreif, wenn Geometrie, Haptik und Optik zusammenpassen.
+                Wir entwickeln Gehäuse, die exakt auf die Elektronik abgestimmt sind, sich intuitiv bedienen lassen
+                und in Meetings, Pilotprojekten und Tests wie ein fertiges Produkt auftreten.
+              </p>
+              <div class="pcb-list">
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>3D-CAD-Konstruktion des Gehäuses – abgestimmt auf Elektronik, Sensorik, Befestigungen und Kabelwege.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Prototypenfertigung per 3D-Druck inkl. Nachbearbeitung, Lackierung und einfachen Branding-Elementen.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Montage- und servicegerechte Konstruktion mit definierten Schraubpunkten, Schnapphaken und Service-Zugängen.</div>
+                </div>
+                <div class="pcb-item">
+                  <span>✓</span>
+                  <div>Bereitstellung der CAD-Daten als belastbare Grundlage für Spritzguss, Werkzeugbau und spätere Serienentwicklung.</div>
+                </div>
+              </div>
+            </div>
+            <div class="pcb-media" aria-label="Beispiel eines Gehäuse-Prototyps">
+              <img loading="lazy"
+                   decoding="async"
+                   src="https://images.pexels.com/photos/15686999/pexels-photo-15686999.jpeg?cs=srgb&dl=pexels-fox-58267-15686999.jpg&fm=jpg"
+                   alt="3D-Drucker fertigt ein technisches Gehäuse">
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- WARUM BYZEP -->
+      <section id="warum" aria-labelledby="warum-heading">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Warum BYZEP</div>
+            <h2 id="warum-heading">Was uns für komplexe Hardware-Projekte stark macht</h2>
+          </div>
+          <p class="section-sub">
+            <em>Wir verbinden langjährige Erfahrung in komplexer Hardware mit präziser Ingenieursarbeit und echter Leidenschaft für Produkte, auf die du dich im Einsatz verlassen kannst.</em>
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>Full-Stack-Hardware</strong>
+            <p>Elektronik, Firmware, Mechanik &amp; Gehäuse aus einer Hand – weniger Schnittstellen, mehr Tempo.</p>
+          </div>
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>Komplexe Use Cases</strong>
+            <p>
+              Erfahrung mit IR-LiFi, NIR-Kamera-Systemen, biometrischen Schließsystemen,
+              Smart Locks, Blockchain-Zutritt, Sensorik &amp; Mixed-Signal-Design.
+            </p>
+          </div>
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>Seriennahe Prototypen</strong>
+            <p>
+              Prototypen, die in Kundenmeetings, Pilotprojekten und vor Investor:innen
+              bestehen – optisch und technisch.
+            </p>
+          </div>
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>Security &amp; Zuverlässigkeit</strong>
+            <p>
+              Denken in realen Risiken: offline-fähige Systeme, kryptografische Verfahren
+              und robuste Hardware für Langzeitbetrieb.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJEKTE -->
+      <section id="projekte" aria-labelledby="projekte-heading">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Projekte</div>
+            <h2 id="projekte-heading">Beispiele aus der Praxis</h2>
+          </div>
+          <p class="section-sub">
+            <em>Viele Projekte laufen unter NDA. Diese drei zeigen die Richtung:
+            echte Umgebung, klare Ziele, messbare Ergebnisse.</em>
+          </p>
+        </div>
+
+        <div class="projects">
+          <article class="project" data-detail-id="project-climenole">
+            <div class="project-img">
+              <img loading="lazy"
+                   decoding="async"
+                   src="893274asdhjfa39.jpeg"
+                   alt="Präsentations- und Technik-Setup in einem Meetingraum">
+              <div class="project-label">Meeting-Tech</div>
+            </div>
+            <div class="project-body">
+              <h3>Climenole</h3>
+              <p><strong>Aufgabe:</strong> IR-basierte Präsentationslösung ohne WLAN/Bluetooth, die in sicherheitskritischen Besprechungsräumen stabil läuft.</p>
+              <p><strong>Unsere Rolle:</strong>
+                Systemdesign, HDMI-zu-CSI-Bridge mit BGA-PCB, Raspberry-Pi-Streaming-Setup und Gehäuse im Konferenzraum-Formfaktor.
+              </p>
+              <div class="card-pills">
+                <span class="card-pill">IR-LiFi</span>
+                <span class="card-pill">Highspeed-PCB</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project" data-detail-id="project-pallypot">
+            <div class="project-img">
+              <img loading="lazy"
+                   decoding="async"
+                   src="mvjasdcfn3451.png"
+                   alt="Sensorgerät neben einer Zimmerpflanze">
+              <div class="project-label">EdTech / IoT</div>
+            </div>
+            <div class="project-body">
+              <h3>PallyPot</h3>
+              <p><strong>Aufgabe:</strong> Interaktiver Blumentopf für Kinder mit Sensorik, Display, Storytelling und IoT-Charakter.</p>
+              <p><strong>Unsere Rolle:</strong>
+                Architektur aus Raspberry Pi und Arduino, kapazitiver Feuchtigkeitssensor,
+                Gehäuse mit Touchdisplay und LED-Ring – inklusive UI-Prototyp.
+              </p>
+              <div class="card-pills">
+                <span class="card-pill">EdTech</span>
+                <span class="card-pill">Sensorik</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project" data-detail-id="project-toka">
+            <div class="project-img">
+              <img loading="lazy"
+                   decoding="async"
+                   src="8347dhhacdsa3d.jpeg"
+                   alt="Löten an einem Pflanzensensor">
+              <div class="project-label">Smart-Gardening</div>
+            </div>
+            <div class="project-body">
+              <h3>Toka</h3>
+              <p><strong>Aufgabe:</strong> Langzeitstabile Substratfeuchtemessung ohne korrodierende Elektroden im Substrat.</p>
+              <p><strong>Unsere Rolle:</strong>
+                Entwicklung des kapazitiven Messprinzips, Elektronik zur Kapazitätsmessung
+                und 3D-gedruckte Halterungen zur Nachrüstung an existierenden Töpfen.
+              </p>
+              <div class="card-pills">
+                <span class="card-pill">Kapazitive Sensorik</span>
+                <span class="card-pill">Langzeitstabil</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Detail-Fenster für Projekte -->
+        <div class="projects-detail-container" id="project-details" aria-live="polite">
+          <!-- Climenole -->
+          <section id="project-climenole" class="projects-detail-section" aria-labelledby="project-climenole-heading">
+            <div>
+              <div class="section-kicker">Meeting-Tech · IR-LiFi</div>
+              <h2 id="project-climenole-heading">Climenole – Präsentationen ohne Funk, aber mit Komfort.</h2>
+              <p class="pcb-text">
+                In sicherheitskritischen Besprechungsräumen ist WLAN oder Bluetooth oft tabu – die Erwartung an
+                Komfort und Bildqualität aber trotzdem hoch. Climenole bringt Inhalte per Infrarot-Lichtkanal in
+                den Raum und bleibt dabei komplett offline.
+              </p>
+              <ul>
+                <li>IR-basierte Übertragung vom Laptop in den Raum, ohne WLAN/Bluetooth.</li>
+                <li>HDMI-zu-CSI-Bridge mit BGA-PCB und angepasstem Highspeed-Routing.</li>
+                <li>Raspberry-Pi-Setup für Decoding, Bildaufbereitung und Ausgabe.</li>
+                <li>Gehäuse im Konferenzraum-Formfaktor – integriert in bestehende Medientechnik.</li>
+				  <li></li>
+					<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li>....U N V O L L S T Ä N D I G....</li>		
+              </ul>
+            </div>
+            <div class="projects-detail-media" aria-label="Climenole Setup">
+              <img loading="lazy"
+                   decoding="async"
+								src="9384hfassn245q3.png"
+                   alt="Konferenzraum mit Technik-Setup">
+            </div>
+          </section>
+
+          <!-- PallyPot -->
+          <section id="project-pallypot" class="projects-detail-section" aria-labelledby="project-pallypot-heading">
+            <div>
+              <div class="section-kicker">EdTech · IoT für Kinder</div>
+              <h2 id="project-pallypot-heading">PallyPot – wenn der Blumentopf mit Kindern spricht.</h2>
+              <p class="pcb-text">
+                PallyPot macht Pflanzen für Kinder begreifbar: Sensoren, Display, Sound und Storytelling
+                verbinden sich zu einem Charakter, der Pflegebedürfnisse erklärt – statt nur Zahlen anzuzeigen.
+              </p>
+              <ul>
+                <li>Hybrid-Architektur aus Raspberry Pi und Arduino für UI und Echtzeit-Sensorik.</li>
+                <li>Kapazitiver Feuchtigkeitssensor und zusätzliche Umweltdaten (z. B. Licht, Temperatur).</li>
+                <li>Gehäusekonzept mit integriertem Display, LED-Ring und Lautsprecher.</li>
+                <li>UI-Prototyp mit einfachen States („durstig“, „müde“, „happy“) statt abstrakter Anzeigen.</li>
+</li>
+					<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li>....U N V O L L S T Ä N D I G....</li>
+              </ul>
+            </div>
+            <div class="projects-detail-media" aria-label="PallyPot Gerät">
+              <img loading="lazy"
+                   decoding="async"
+                   src="452efadgrhsfd_er4.png"
+                   alt="Kleines smartes Gerät neben einer Pflanze">
+            </div>
+          </section>
+
+          <!-- Toka -->
+          <section id="project-toka" class="projects-detail-section" aria-labelledby="project-toka-heading">
+            <div>
+              <div class="section-kicker">Smart-Gardening · Sensorik</div>
+              <h2 id="project-toka-heading">Toka – Substratfeuchte messen, ohne dass Elektroden korrodieren.</h2>
+              <p class="pcb-text">
+                Klassische Bodenfühler korrodieren, gerade in humiden Umgebungen. Toka setzt auf ein kapazitives Messprinzip,
+                das den Topf von außen „liest“ – und damit deutlich langlebiger ist.
+              </p>
+              <ul>
+                <li>Entwicklung eines kapazitiven Messprinzips für Pflanzgefäße.</li>
+                <li>Spezialisierte Elektronik zur Auswertung kleiner Kapazitätsänderungen.</li>
+                <li>3D-gedruckte Halterungen zur Nachrüstung an bestehende Töpfe.</li>
+                <li>Auslegung für Langzeitbetrieb – ohne im Substrat verbaute Elektroden.</li>
+				  <li></li>
+					<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li>....U N V O L L S T Ä N D I G....</li>
+              </ul>
+            </div>
+            <div class="projects-detail-media" aria-label="Toka Sensor">
+              <img loading="lazy"
+                   decoding="async"
+                   src="ksdljfkjlasd3423d21.png"
+                   alt="Lötarbeiten an einem Pflanzensensor">
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- ABLAUF -->
+      <section id="ablauf" aria-labelledby="ablauf-heading">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Ablauf</div>
+            <h2 id="ablauf-heading">So arbeiten wir mit dir</h2>
+          </div>
+          <p class="section-sub">
+            <em>Klar definierte Schritte und Ergebnisse – damit du intern sauber berichten kannst, wo dein Prototyp steht.</em>
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>1 · Kontext &amp; Ziel</strong>
+            <p> Du erzählst uns kurz, <strong>was du vorhast</strong> – z.B. Pilot, Investorentermin oder 				Machbarkeitscheck – und in welchem Umfeld das später laufen soll (Meetingraum, Fahrzeug, 				Klinik, Schule, …). Daraus leiten wir ein sinnvolles Vorgehen ab.</p>
+          </div>
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>2 · PROOF OF CONCEPT</strong>
+            <p>Wir testen den <strong>Kern der Idee</strong>: einfacher Aufbau, erste Elektronik, Messungen. Ziel: schnell sehen, ob der Ansatz technisch funktioniert, bevor Zeit und Geld in PCB-Feinschliff und Design-Gehäuse fließen.</p>
+          </div>
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>3 · PROTOTYP, PCB & GEHÄUSE</strong>
+            <p>Aus dem PoC wird ein <strong>vorzeigbarer Prototyp</strong>:
+Elektronik & PCB-Design, bestückte Platinen und – wenn gewünscht – ein passendes 3D-gedrucktes Gehäuse. So, dass du das Gerät im echten Umfeld testen und es Kund:innen, Management oder Investor:innen    auf den Tisch legen kannst.</p>
+          </div>
+          <div class="timeline-step">
+            <strong><span class="step-dot"></span>4 · ÜBERGABE & NÄCHSTE SCHRITTE</strong>
+            <p>Du bekommst ein <strong>sauberes Paket</strong> für eure Entwickler:innen: CAD-Daten, PCB-Daten, BOM, Messwerte und eine kurze Doku. Plus eine ehrliche Einschätzung, ob sich Pilot, Rollout oder ein weiteres Iterieren lohnt.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT / ÜBER UNS -->
+      <section id="about" class="about" aria-labelledby="about-heading">
+        <div>
+          <div class="section-kicker">Über uns</div>
+          <h2 id="about-heading">BYZEP – Smart-Device-Studio aus Heilbronn</h2>
+          <p class="section-sub">
+            Hinter BYZEP stehen Ingenieure aus Heilbronn mit über zehn Jahren Erfahrung
+            in Elektronikentwicklung, Prototyping und Produktentwicklung. Wir arbeiten mit Teams
+            zusammen, die komplexe Hardware-Produkte schneller greifbar machen wollen.
+          </p>
+          <div class="pcb-list">
+            <div class="pcb-item">
+              <span>✓</span>
+              <div>10+ Jahre Erfahrung in Embedded Systems, PCB-Design, Sensorik und Smart Devices.</div>
+            </div>
+            <div class="pcb-item">
+              <span>✓</span>
+              <div>Wurzeln in Heilbronn – remote aus Deutschland, für Produkt- & Innovationsteams in Mittelstand, Konzernen und Startups.</div>
+            </div>
+            <div class="pcb-item">
+              <span>✓</span>
+              <div>Hands-on-Mentalität: Geräte, die man anfassen, testen und zeigen kann.</div>
+            </div>
+          </div>
+        </div>
+        <aside class="about-aside">
+          <div class="about-chip">Smart-Device-Studio · +10 Jahre Erfahrung</div>
+          <div>
+            Gut passend, wenn du
+            <strong>Verantwortung für ein Hardware- oder Innovationsprojekt</strong> trägst,
+            aber kein komplettes Geräte-Team im Haus hast – oder deine Entwickler:innen
+            fokussiert auf das Kerngeschäft lassen willst.
+          </div>
+          <div>
+            Wir steigen dort ein, wo erste Ideen und Anforderungen existieren – und liefern dir
+            einen Prototyp, der wie ein fertiges Produkt wirkt.
+          </div>
+        </aside>
+      </section>
+
+      <!-- KONTAKT -->
+      <section id="kontakt" aria-labelledby="kontakt-heading">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Kontakt</div>
+            <h2 id="kontakt-heading">Beschreib uns kurz, welches Gerät du bauen willst.</h2>
+          </div>
+          <p class="section-sub">
+            <em>Ein bis zwei Sätze reichen (z. B. „Wir brauchen einen Prototyp für …“).</em>
+          </p>
+        </div>
+
+        <div class="contact">
+          <form class="contact-form" method="post" action="#">
+            <div class="field">
+              <label for="name">Name / Team / Bereich</label>
+              <input id="name" name="name" type="text" autocomplete="organization-title" placeholder="z.B. Innovation / Logistik / Filialtechnik">
+            </div>
+            <div class="field">
+              <label for="email">E-Mail</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="projekt">Worüber willst du entscheiden oder was willst du bauen?</label>
+              <textarea id="projekt" name="projekt" placeholder="z.B. „Pilot für sensorgestützte Kühlketten-Überwachung in 5 Märkten“ oder „Prototyp für einen smarten Schließzylinder mit App“" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">
+              Nachricht senden
+              <span aria-hidden="true">↗</span>
+            </button>
+            <div class="contact-note">
+              Oder direkt per E-Mail: <strong>hello@byzep.de</strong>
+            </div>
+          </form>
+
+          <aside class="contact-aside">
+            <div class="contact-chip">Remote aus Heilbronn · Zusammenarbeit mit Produkt- &amp; Innovationsteams</div>
+            <div>
+              Ideal, wenn du <strong>Verantwortung für ein Vorhaben</strong> trägst, aber kein komplettes Hardware-Team im Haus hast –
+              oder deine Entwickler:innen entlasten willst, bis klar ist, ob sich der Prototyp lohnt.
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>© 2025 BYZEP – Smart Devices · Prototyping · PCB &amp; Gehäuse</div>
+    </footer>
+  </div>
+
+  <!-- JS: Cards & Projekte öffnen Detailfenster unter den jeweiligen Grids -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* LEISTUNGEN */
+      const cards = document.querySelectorAll('.card');
+      const detailContainer = document.getElementById('leistungen-details');
+      const detailPanels = detailContainer ? detailContainer.querySelectorAll('.leistungen-detail-section') : [];
+
+      function hideDetails() {
+        if (!detailContainer) return;
+        detailContainer.classList.remove('is-visible');
+        detailPanels.forEach(panel => panel.classList.remove('is-active'));
+      }
+
+      function openDetail(detailId) {
+        if (!detailContainer) return;
+        detailContainer.classList.add('is-visible');
+        detailPanels.forEach(panel => {
+          panel.classList.toggle('is-active', panel.id === detailId);
+        });
+      }
+
+      cards.forEach(card => {
+        const title = card.querySelector('h3');
+        const imageWrapper = card.querySelector('.card-img');
+        const detailId = card.dataset.detailId;
+
+        const handleClick = (event) => {
+          event.stopPropagation();
+          const wasActive = card.classList.contains('card--active');
+
+          cards.forEach(c => c.classList.remove('card--active'));
+
+          if (wasActive) {
+            hideDetails();
+            return;
+          }
+
+          card.classList.add('card--active');
+
+          if (detailId) {
+            openDetail(detailId);
+          } else {
+            hideDetails();
+          }
+        };
+
+        if (title) {
+          title.addEventListener('click', handleClick);
+        }
+        if (imageWrapper) {
+          imageWrapper.addEventListener('click', handleClick);
+        }
+      });
+
+      /* PROJEKTE – gleiche Mechanik */
+      const projectCards = document.querySelectorAll('.project');
+      const projectDetailContainer = document.getElementById('project-details');
+      const projectDetailPanels = projectDetailContainer ? projectDetailContainer.querySelectorAll('.projects-detail-section') : [];
+
+      function hideProjectDetails() {
+        if (!projectDetailContainer) return;
+        projectDetailContainer.classList.remove('is-visible');
+        projectDetailPanels.forEach(panel => panel.classList.remove('is-active'));
+      }
+
+      function openProjectDetail(detailId) {
+        if (!projectDetailContainer) return;
+        projectDetailContainer.classList.add('is-visible');
+        projectDetailPanels.forEach(panel => {
+          panel.classList.toggle('is-active', panel.id === detailId);
+        });
+      }
+
+      projectCards.forEach(project => {
+        const title = project.querySelector('.project-body h3');
+        const imageWrapper = project.querySelector('.project-img');
+        const detailId = project.dataset.detailId;
+
+        const handleProjectClick = (event) => {
+          event.stopPropagation();
+          const wasActive = project.classList.contains('project--active');
+
+          projectCards.forEach(p => p.classList.remove('project--active'));
+
+          if (wasActive) {
+            hideProjectDetails();
+            return;
+          }
+
+          project.classList.add('project--active');
+
+          if (detailId) {
+            openProjectDetail(detailId);
+          } else {
+            hideProjectDetails();
+          }
+        };
+
+        if (title) {
+          title.addEventListener('click', handleProjectClick);
+        }
+        if (imageWrapper) {
+          imageWrapper.addEventListener('click', handleProjectClick);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
