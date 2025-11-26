@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Alligatoren vs. Gladiatoren – wer ist stärker?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color-scheme: dark;
+        }
+
+        body {
+            margin: 0;
+            background: #050509;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 1.5rem;
+            padding: 2.5rem clamp(1.5rem, 4vw, 4rem);
+            align-items: center;
+            background: radial-gradient(circle at top left, #233647 0, #050509 55%);
+        }
+
+        header h1 {
+            margin-top: 0;
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        header p {
+            max-width: 36rem;
+        }
+
+        .hero-image {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .badge {
+            position: absolute;
+            left: 1rem;
+            bottom: 1rem;
+            background: rgba(5,5,9,0.8);
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        main {
+            padding: 2rem clamp(1.5rem, 4vw, 4rem) 3rem;
+        }
+
+        h2 {
+            margin-top: 2.5rem;
+            font-size: 1.6rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: radial-gradient(circle at top, rgba(255,255,255,0.06), rgba(8,8,12,0.96));
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            opacity: 0.75;
+            margin-bottom: 0.75rem;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            display: block;
+            object-fit: cover;
+            max-height: 230px;
+        }
+
+        .fact-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+
+        .fact-label {
+            opacity: 0.7;
+        }
+
+        .fact-value {
+            font-weight: 600;
+        }
+
+        .vs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .vs-table th,
+        .vs-table td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            vertical-align: top;
+        }
+
+        .vs-table th {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .vs-table td strong {
+            font-weight: 600;
+        }
+
+        .label-pill {
+            display: inline-block;
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-left: 0.25rem;
+            opacity: 0.9;
+        }
+
+        .sources {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 2rem;
+        }
+
+        .sources a {
+            color: #9fd3ff;
+        }
+
+        a.image-credit {
+            display: inline-block;
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-decoration: none;
+        }
+
+        a.image-credit:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 800px) {
+            header {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div>
+        <h1>Alligatoren vs. Gladiatoren – wer ist wirklich stärker?</h1>
+        <p>
+            Auf der einen Seite ein gepanzerter Profikämpfer aus der römischen Arena, auf der anderen ein moderner
+            Alligator mit monströser Bisskraft. Diese Seite zeigt mit echten Fotos und grob realistischen Zahlen,
+            warum Alligatoren im direkten Kraft-Duell fast immer im Vorteil wären.
+        </p>
+    </div>
+
+    <div class="hero-image">
+        <img src="https://images.pexels.com/photos/33879704/pexels-photo-33879704.jpeg?cs=srgb&dl=pexels-william-xin-1932780618-33879704.jpg&fm=jpg"
+             alt="Alligator mit geöffnetem Maul im Wasser">
+        <div class="badge">Alligator – Bisskraft: deutlich über 2.000&nbsp;psi</div>
+    </div>
+</header>
+
+<main>
+    <section id="profil">
+        <h2>Die Kontrahenten im Profil</h2>
+        <div class="comparison-grid">
+            <!-- Alligator-Card -->
+            <article class="card">
+                <h3>Alligator</h3>
+                <div class="tagline">Moderner Spitzenprädator</div>
+                <a href="https://www.pexels.com/photo/close-up-shot-of-a-crocodile-13148002/" target="_blank" rel="noopener">
+                    <img src="https://images.pexels.com/photos/13148002/pexels-photo-13148002.jpeg?cs=srgb&dl=pexels-ellie-burgin-1661546-13148002.jpg&fm=jpg"
+                         alt="Nahaufnahme eines ruhenden Krokodils mit geöffnetem Maul">
+                </a>
+                <a class="image-credit"
+                   href="https://www.pexels.com/photo/close-up-shot-of-a-crocodile-13148002/"
+                   target="_blank" rel="noopener">
+                    Foto auf Pexels ansehen
+                </a>
+
+                <div class="fact-row">
+                    <span class="fact-label">Bisskraft</span>
+                    <span class="fact-value">&gt; 2.000&nbsp;psi (Pfund pro Quadratzoll)</span>
+                </div>
+                <div class="fact-row">
+                    <span class="fact-label">Körpergewicht</span>
+                    <span class="fact-value">mehrere 100&nbsp;kg bei großen Männchen</span>
+                </div>
+                <div class="fact-row">
+                    <span class="fact-label">Waffen</span>
+                    <span class="fact-value">Kiefer, Zähne, Schwanzschläge, Todesspirale</span>
+                </div>
+                <div class="fact-row">
+                    <span class="fact-label">Rüstung</span>
+                    <span class="fact-value">dicke Haut mit Knochenplatten (Osteodermen)</span>
+                </div>
+            </article>
+
+            <!-- Gladiator-Card -->
+            <article class="card">
+                <h3>Gladiator</h3>
+                <div class="tagline">Trainierter menschlicher Arena-Kämpfer</div>
+                <a href="https://www.pexels.com/photo/portrait-of-a-man-in-a-roman-warrior-costume-with-helmet-6968386/"
+                   target="_blank" rel="noopener">
+                    <img src="https://images.pexels.com/photos/6968386/pexels-photo-6968386.jpeg?cs=srgb&dl=pexels-pierrma-pietro-marini-31299951-6968386.jpg&fm=jpg"
+                         alt="Mann in römischer Krieger-Rüstung mit Helm">
+                </a>
+                <a class="image-credit"
+                   href="https://www.pexels.com/photo/portrait-of-a-man-in-a-roman-warrior-costume-with-helmet-6968386/"
+                   target="_blank" rel="noopener">
+                    Foto auf Pexels ansehen
+                </a>
+
+                <div class="fact-row">
+                    <span class="fact-label">Bisskraft</span>
+                    <span class="fact-value">ca. 150–200&nbsp;psi (typischer Mensch)</span>
+                </div>
+                <div class="fact-row">
+                    <span class="fact-label">Körpergewicht</span>
+                    <span class="fact-value">~ 70–90&nbsp;kg plus Ausrüstung</span>
+                </div>
+                <div class="fact-row">
+                    <span class="fact-label">Waffen</span>
+                    <span class="fact-value">Schwert, Speer, Netz, Schild (je nach Typ)</span>
+                </div>
+                <div class="fact-row">
+                    <span class="fact-label">Rüstung</span>
+                    <span class="fact-value">Metallhelm, Schild, Arm-/Beinschienen, Polsterung</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="direktvergleich">
+        <h2>Direktvergleich: rohe Kraft vs. Technik</h2>
+
+        <table class="vs-table" aria-label="Vergleich Alligator und Gladiator">
+            <thead>
+            <tr>
+                <th>Aspekt</th>
+                <th>Alligator</th>
+                <th>Gladiator</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Maximale Bisskraft</td>
+                <td>
+                    <strong>Extrem hoch</strong><span class="label-pill">deutlich &gt; 2.000&nbsp;psi</span><br>
+                    Kann Knochen und Schildkanten zerquetschen.
+                </td>
+                <td>
+                    <strong>Vergleichsweise gering</strong><span class="label-pill">~ 160&nbsp;psi</span><br>
+                    Bisse sind gefährlich, aber kein Hauptangriffsmittel.
+                </td>
+            </tr>
+            <tr>
+                <td>Körperliche Robustheit</td>
+                <td>
+                    Knochenpanzer im Rücken, niedrige Silhouette, sehr schwer zu verletzen.
+                </td>
+                <td>
+                    Hat Rüstung, aber viele Lücken (Gelenke, Beine, Gesicht). Abhängig von Vorbereitung &amp; Ausrüstung.
+                </td>
+            </tr>
+            <tr>
+                <td>Reichweite</td>
+                <td>
+                    Durch plötzliche Vorwärts-Sprints und Schwanzschläge gefährlich im Nahbereich,
+                    aber begrenzte Reichweite.
+                </td>
+                <td>
+                    Vorteil mit Speer oder Lanze; kann Abstand halten, solange er nicht zu Boden geht.
+                </td>
+            </tr>
+            <tr>
+                <td>Ausdauer</td>
+                <td>
+                    Kurzzeitige Explosivkraft, dafür sehr energieeffizient im Liegen oder Lauern.
+                </td>
+                <td>
+                    Gut trainiert, aber auf Dauer bremsen Rüstung und Hitze; Fehler werden schnell tödlich.
+                </td>
+            </tr>
+            <tr>
+                <td>„One-Hit-Potential“</td>
+                <td>
+                    Ein sauberer Biss an Bein oder Rumpf kann Knochen brechen oder Gliedmaßen abtrennen.
+                </td>
+                <td>
+                    Braucht meist mehrere gezielte Treffer, um einen Alligator ernsthaft zu schwächen.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="szenario">
+        <h2>Wie realistisch wäre ein Kampf?</h2>
+
+        <div class="comparison-grid">
+            <article class="card">
+                <h3>Typische Arena-Situation</h3>
+                <a href="https://www.pexels.com/photo/shirtless-men-fighting-with-sword-7186550/"
+                   target="_blank" rel="noopener">
+                    <img src="https://images.pexels.com/photos/7186550/pexels-photo-7186550.jpeg?cs=srgb&dl=pexels-sombra084-7186550.jpg&fm=jpg"
+                         alt="Halbnackte Männer, die mit Schwertern kämpfen">
+                </a>
+                <a class="image-credit"
+                   href="https://www.pexels.com/photo/shirtless-men-fighting-with-sword-7186550/"
+                   target="_blank" rel="noopener">
+                    Gladiatoren-Reenactment auf Pexels
+                </a>
+                <p>
+                    Gladiatoren waren spezialisierte Kämpfer, trainiert gegen andere Menschen mit
+                    mehr oder weniger vorhersehbaren Waffen und Bewegungen. Ihre Strategien basierten
+                    auf Distanzkontrolle, Schildarbeit und Schlag-/Stichtechniken.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Alligator im Jagdmodus</h3>
+                <a href="https://www.pexels.com/photo/close-up-of-crocodile-with-open-mouth-in-water-33879704/"
+                   target="_blank" rel="noopener">
+                    <img src="https://images.pexels.com/photos/33879704/pexels-photo-33879704.jpeg?cs=srgb&dl=pexels-william-xin-1932780618-33879704.jpg&fm=jpg"
+                         alt="Krokodil mit geöffnetem Maul im Wasser von oben fotografiert">
+                </a>
+                <a class="image-credit"
+                   href="https://www.pexels.com/photo/close-up-of-crocodile-with-open-mouth-in-water-33879704/"
+                   target="_blank" rel="noopener">
+                    Krokodil-Foto auf Pexels
+                </a>
+                <p>
+                    Alligatoren greifen aus dem Hinterhalt an: Blitzschneller Vorstoß aus dem Wasser,
+                    Zubeißen, Festhalten, dann Drehen („Death Roll“), um Beute zu brechen oder zu ertränken.
+                    Gegen diese rohe Kraft hilft auch ein Metallschild nur begrenzt lange.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Fazit: Wer gewinnt?</h3>
+                <a href="https://www.pexels.com/photo/grayscale-photo-of-man-holding-a-sword-7186543/"
+                   target="_blank" rel="noopener">
+                    <img src="https://images.pexels.com/photos/7186543/pexels-photo-7186543.jpeg?cs=srgb&dl=pexels-sombra084-7186543.jpg&fm=jpg"
+                         alt="Gladiator in Schwarz-Weiß mit Schwert">
+                </a>
+                <a class="image-credit"
+                   href="https://www.pexels.com/photo/grayscale-photo-of-man-holding-a-sword-7186543/"
+                   target="_blank" rel="noopener">
+                    Weitere Gladiatoren-Szene auf Pexels
+                </a>
+                <p>
+                    In einer inszenierten Show könnte ein Gladiator mit Speer und sicherem Abstand gut aussehen.
+                    In einem echten, unvorhersehbaren Nahkampf wäre die Kombination aus Bisskraft,
+                    Panzerung und Instinkt des Alligators normalerweise überlegen –
+                    ein einziger Fehler des Menschen reicht aus.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section class="sources">
+        <p>
+            Hinweis: Die Bisskraft-Angaben sind grobe Näherungen aus populärwissenschaftlichen Quellen –
+            sie sollen die Größenordnung zeigen, nicht exakte Messwerte sein.
+        </p>
+        <p>
+            Alle Fotos stammen von <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>
+            und sind dort kostenlos einsehbar.
+        </p>
+    </section>
+</main>
+</body>
+</html>
